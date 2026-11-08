@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ELEVATE 5.0 | AIESEC in NSBM</title>
+<meta name="description" content="ELEVATE 5.0, the leadership camp by AIESEC in NSBM. Claim your seat, get sorted into your house, and visit the Emporium.">
+<meta name="theme-color" content="#0b0718">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%233a1650'/%3E%3Ctext x='16' y='22' font-size='16' text-anchor='middle' fill='%23e8c26a' font-family='serif' font-weight='700'%3EE5%3C/text%3E%3C/svg%3E">
+<script>
+  // Decide before first paint so the site never flashes behind the letter.
+  (function () {
+    var seen; try { seen = localStorage.getItem('e5-letter'); } catch (e) {}
+    var force = /[?&]intro/.test(location.search);
+    if ((force || !seen) && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('play-intro');
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;700&family=IM+Fell+English:ital@0;1&family=Pinyon+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="preload" as="image" href="images/hero-wide.webp" media="(min-aspect-ratio: 1/1)">
+<link rel="preload" as="image" href="images/hero-phone.webp" media="(max-aspect-ratio: 1/1)">
+</head>
+<body>
+<a class="skip-link" href="#register">Skip to registration</a>
+<canvas id="fx" aria-hidden="true"></canvas>
+<button id="soundToggle" class="sound" type="button" aria-pressed="false" hidden>Music off</button>
+
+<!-- The acceptance letter -->
+<div id="intro" role="dialog" aria-label="Your invitation to ELEVATE 5.0">
+  <div class="plate"></div>
+  <div id="introDark" class="intro-dark"></div>
+  <div id="gate" class="gate">
+    <div class="gate-light"><div class="gate-glow" id="gateGlow"></div><img src="images/candle-a.webp" alt=""></div>
+    <p>A letter is on its way to you.</p>
+    <button id="lightCandle" class="btn brass" type="button">Light the candle</button>
+    <button id="noSound" class="btn plain" type="button" hidden>Continue without sound</button>
+  </div>
+  <button id="skipIntro" class="skip-intro" type="button">Skip the letter</button>
+  <div id="introOwl" class="intro-owl" aria-hidden="true"><img src="images/owl.webp" alt=""></div>
+  <div id="stage" class="stage">
+    <div class="env-part env-back"></div>
+    <article id="letter" class="letter">
+      <div class="letter-sheet" id="letterSheet"></div>
+      <div id="letterBody">
+        <p id="lDear" class="l-line l-dear"></p>
+        <p class="l-line">Your name has been spoken in the candlelit halls of Elevate, and the fifth gathering would be poorer without you.</p>
+        <p class="l-line">Three days. A castle of restless minds. A version of you that you have not met yet.</p>
+        <p class="l-line" id="lDate"></p>
+        <p class="l-line l-sign">The Keepers of Elevate</p>
+      </div>
+      <p class="l-org">AIESEC in NSBM</p>
+      <button id="enterHall" class="btn wax" type="button">Enter the hall</button>
+      <div id="letterQuill" class="letter-quill" aria-hidden="true"></div>
+    </article>
+    <div class="env-part env-front"></div>
+    <div class="env-part env-flap" id="flap"></div>
+    <label class="address" id="address"><span>For</span><input id="introName" type="text" maxlength="28" autocomplete="given-name" placeholder="your name" aria-label="Your first name, optional"></label>
+    <button id="seal" class="seal" type="button" aria-label="Break the wax seal and open your letter" disabled>
+      <span class="half left"><img src="images/seal.webp" alt=""><b>E5</b></span><span class="half right"><img src="images/seal.webp" alt=""><b>E5</b></span>
+    </button>
+  </div>
+  <p id="prompt" class="prompt">Break the seal</p>
+</div>
+
+<!-- Brass plaque navigation -->
+<header id="nav" class="nav brass">
+  <a class="brand" href="#top">ELEVATE <b>5.0</b></a>
+  <nav aria-label="Main">
+    <details class="menu">
+      <summary>Menu</summary>
+      <ul>
+        <li><a href="#about"><span>The Prospectus</span><small>About</small></a></li>
+        <li><a href="#agenda"><span>The Map</span><small>Agenda</small></a></li>
+        <li><a href="#portraits"><span>The Portraits</span><small>Stories</small></a></li>
+        <li><a href="#emporium"><span>The Emporium</span><small>Merch</small></a></li>
+        <li><a href="#patrons"><span>The Patrons</span><small>Partners</small></a></li>
+        <li><a href="#faq"><span>The Scrolls</span><small>FAQ</small></a></li>
+      </ul>
+    </details>
+  </nav>
+  <a class="btn wax nav-cta" href="#register">Register</a>
+</header>
+
+<main id="top">
+  <!-- Great hall -->
+  <section class="hero" id="hero">
+    <div class="plate"></div><i class="stars"></i><div class="shade"></div>
+    <div class="candles" data-depth="far"></div>
+    <div class="candles" data-depth="mid"></div>
+    <div class="candles" data-depth="near"></div>
+    <div class="hero-inner">
+      <p class="ribbon" id="sampleRibbon" hidden>Preview: dates, prices and testimonials are sample content</p>
+      <p class="kicker" id="heroKicker">AIESEC in NSBM summons you to</p>
+      <h1 class="title" id="heroTitle" aria-label="ELEVATE 5.0"><span id="titleWord" aria-hidden="true">ELEVATE</span><span class="v" aria-hidden="true">5.0</span></h1>
+      <p class="tag" id="heroTag"></p>
+      <div class="cta" id="heroCta">
+        <a class="btn brass" href="#register">Claim your seat</a>
+        <a class="btn plain" href="#emporium">Visit the Emporium</a>
+      </div>
+      <div class="count" id="count" role="timer" aria-label="Time until camp">
+        <div><b id="cD">0</b><small>Days</small></div>
+        <div><b id="cH">0</b><small>Hours</small></div>
+        <svg class="glass" viewBox="0 0 100 160" aria-hidden="true">
+          <defs><clipPath id="bulbs"><path d="M22 16H78C78 50 58 66 54 80C58 94 78 110 78 144H22C22 110 42 94 46 80C42 66 22 50 22 16Z"/></clipPath></defs>
+          <g clip-path="url(#bulbs)">
+            <rect id="sandTop" x="10" y="16" width="80" height="64" fill="#e8c26a"/>
+            <rect id="sandBottom" x="10" y="144" width="80" height="0" fill="#e8c26a"/>
+            <rect class="stream" x="49" y="78" width="2" height="66" fill="#ffe7a8"/>
+          </g>
+          <path fill="rgba(255,255,255,.08)" stroke="#e8c26a" stroke-width="2" d="M22 16H78C78 50 58 66 54 80C58 94 78 110 78 144H22C22 110 42 94 46 80C42 66 22 50 22 16Z"/>
+          <rect x="12" y="8" width="76" height="9" rx="3" fill="#a97c2b"/><rect x="12" y="143" width="76" height="9" rx="3" fill="#a97c2b"/>
+        </svg>
+        <div><b id="cM">0</b><small>Mins</small></div>
+        <div><b id="cS">0</b><small>Secs</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Open book -->
+  <section class="prospectus" id="about">
+    <div class="book">
+      <div class="page left paper">
+        <p class="eyebrow">The Prospectus <i>· About</i></p>
+        <h2 class="ink dark">What is ELEVATE?</h2>
+        <p class="drop">ELEVATE is the flagship leadership camp of AIESEC in NSBM, now in its fifth year. A selected group of undergraduates leaves the lecture halls behind and spends days together learning what leading actually feels like.</p>
+        <p>AIESEC is the world's largest youth-run organisation, in over 100 countries. ELEVATE is where our chapter brings that spirit home, with workshops, challenges, company partners and a great deal of candlelight.</p>
+      </div>
+      <div class="page right paper">
+        <p class="eyebrow">Of this gathering</p>
+        <dl class="facts">
+          <div><dt id="fDays"></dt><dd>Days at camp</dd></div>
+          <div><dt id="fDelegates"></dt><dd>Selected delegates</dd></div>
+          <div><dt>5th</dt><dd>Edition</dd></div>
+        </dl>
+        <p class="when-where"><strong id="fDates"></strong><br><span id="fVenue"></span></p>
+        <a class="btn wax" href="#register">Claim your seat</a>
+      </div>
+      <div class="leaf" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section class="agenda" id="agenda">
+    <div class="agenda-head">
+      <p class="eyebrow light">The Map <i>· Agenda</i></p>
+      <h2 class="ink">The road through camp</h2>
+    </div>
+    <div class="agenda-body">
+      <div class="map-shadow"><div class="map" id="map"></div></div>
+      <aside class="map-note paper" id="mapNote" aria-live="polite"></aside>
+    </div>
+  </section>
+
+  <!-- Portraits -->
+  <section class="portraits" id="portraits">
+    <p class="eyebrow light">The Portraits <i>· Stories</i></p>
+    <h2 class="ink">They were here before you</h2>
+    <p class="sub">Touch a portrait and it will speak.</p>
+    <div class="wall" id="wall"></div>
+    <blockquote class="plaque brass" id="plaque" aria-live="polite"><p id="plaqueQuote"></p><cite id="plaqueName"></cite></blockquote>
+  </section>
+
+  <!-- Merch -->
+  <section class="emporium" id="emporium">
+    <p class="eyebrow light">The Emporium <i>· Merch</i></p>
+    <h2 class="ink">Provisions for the road</h2>
+    <p class="sub">Everything here floats until someone claims it.</p>
+    <div class="shelves" id="shelves"></div>
+  </section>
+
+  <!-- Partners -->
+  <section class="patrons" id="patrons">
+    <p class="eyebrow light">The Patrons <i>· Partners</i></p>
+    <h2 class="ink">Under these banners</h2>
+    <div class="banners" id="banners"></div>
+    <p class="sub"><a id="patronLink" class="inline">Raise your banner with us</a></p>
+  </section>
+
+  <!-- Register -->
+  <section class="register" id="register">
+    <p class="eyebrow light">Enrol <i>· Register</i></p>
+    <h2 class="ink">The Sorting Flame</h2>
+    <p class="sub">Five questions. The flame decides your house.</p>
+    <div class="sorting" id="sorting" style="--flame:#e8c26a">
+      <div class="altar" aria-hidden="true"><div class="fire" id="fire"></div><img class="bowl" src="images/brazier.webp" alt="" loading="lazy"></div>
+      <div class="ritual" id="ritual"></div>
+    </div>
+
+    <form id="regForm" class="scroll paper" novalidate>
+      <div class="scroll-head">
+        <div><h3>The Enrolment Scroll</h3><p>Fill this in to claim your seat.</p></div>
+        <div class="house-badge" id="houseBadge"></div>
+      </div>
+      <div class="grid">
+        <label class="field"><span>Full name</span><input name="name" required maxlength="120" autocomplete="name" data-msg="Please write your full name."></label>
+        <label class="field"><span>Email</span><input name="email" type="email" required maxlength="200" autocomplete="email" data-msg="Please enter a valid email address."></label>
+        <label class="field"><span>WhatsApp number</span><input name="phone" type="tel" required maxlength="30" pattern="[0-9+ \(\)\-]{9,}" autocomplete="tel" data-msg="Please enter a valid phone number."></label>
+        <label class="field"><span>University</span><input name="university" required maxlength="160" data-msg="Please tell us your university."></label>
+        <label class="field"><span>Degree and year</span><input name="degree" required maxlength="160" data-msg="Please tell us your degree and year."></label>
+        <label class="field"><span>Dietary needs <small>(optional)</small></span><input name="dietary" maxlength="300"></label>
+        <label class="field wide"><span>Why do you want to be at ELEVATE?</span><textarea name="why" rows="3" required maxlength="1500" data-msg="Please write a line or two about why you want to come."></textarea></label>
+      </div>
+      <div class="pay" data-pay></div>
+      <label class="field wide"><span>Payment slip <small>(JPG, PNG or PDF, up to 5 MB)</small></span><input name="slip" type="file" accept=".jpg,.jpeg,.png,.pdf" required data-msg="Please attach your payment slip."></label>
+      <label class="consent"><input type="checkbox" name="consent" required data-msg="Please agree so we can process your registration."><span>AIESEC in NSBM may store these details and my slip to manage ELEVATE 5.0, and will not share them outside the organising team.</span></label>
+      <input class="trap" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="submit-row"><button class="btn wax" type="submit">Seal and send</button><p class="form-msg" role="alert"></p></div>
+    </form>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <p class="eyebrow light">The Scrolls <i>· FAQ</i></p>
+    <h2 class="ink">Things people ask the owls</h2>
+    <div class="scrolls" id="scrolls"></div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p class="brand">ELEVATE <b>5.0</b></p>
+  <p>Organised by AIESEC in NSBM</p>
+  <p><a class="inline" href="?intro">Read your letter again</a></p>
+</footer>
+
+<!-- Satchel -->
+<button id="satchelBtn" class="satchel-btn" type="button" aria-label="Open your satchel, 0 items">
+  <svg viewBox="0 0 64 64" aria-hidden="true"><path fill="none" stroke="#e8c26a" stroke-width="3" d="M22 20C22 6 42 6 42 20"/><path fill="#5a3a1c" d="M10 20H54L58 56H6Z"/><path fill="#7a5128" d="M10 20H54V34C44 42 20 42 10 34Z"/><circle cx="32" cy="37" r="5" fill="#e8c26a"/></svg>
+  <span id="satchelCount">0</span>
+</button>
+<dialog id="satchel" class="sheet paper" aria-label="Your satchel">
+  <button class="close" type="button" data-close aria-label="Close satchel">×</button>
+  <h3>Your Satchel</h3>
+  <div id="cartLines"></div>
+  <form id="cartForm" novalidate>
+    <div class="grid">
+      <label class="field"><span>Full name</span><input name="name" required maxlength="120" autocomplete="name" data-msg="Please write your full name."></label>
+      <label class="field"><span>Email</span><input name="email" type="email" required maxlength="200" autocomplete="email" data-msg="Please enter a valid email address."></label>
+      <label class="field wide"><span>WhatsApp number</span><input name="phone" type="tel" required maxlength="30" pattern="[0-9+ \(\)\-]{9,}" autocomplete="tel" data-msg="Please enter a valid phone number."></label>
+    </div>
+    <div class="pay" data-pay></div>
+    <label class="field wide"><span>Payment slip <small>(JPG, PNG or PDF, up to 5 MB)</small></span><input name="slip" type="file" accept=".jpg,.jpeg,.png,.pdf" required data-msg="Please attach your payment slip."></label>
+    <input class="trap" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="submit-row"><button class="btn wax" type="submit">Send by owl</button><p class="form-msg" role="alert"></p></div>
+  </form>
+</dialog>
+
+<!-- Confirmation -->
+<dialog id="owlPost" class="owl-post" aria-label="Sent">
+  <div class="post-owl" id="postOwl" aria-hidden="true"><img src="images/owl.webp" alt="" loading="lazy"></div>
+  <div class="post-scroll paper">
+    <h3>Sent by owl</h3>
+    <p>Your order reference</p>
+    <p class="ref" id="postRef"></p>
+    <p id="postNote"></p>
+    <button class="btn wax" type="button" data-close>Back to the castle</button>
+  </div>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="content.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
